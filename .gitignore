@@ -1,0 +1,50 @@
+# IntelliJ IDEA
+/.idea/
+*/.idea/
+*.iml
+*/*.iml
+
+# Eclipse
+/.settings/
+*/.settings/
+*.classpath
+*.project
+
+# netbeans files
+nb-configuration.xml
+nbactions.xml
+
+# vscode stuff
+.vscode/
+
+# Maven
+/target/
+*/target/
+
+# Gradle
+.gradle/
+gradle/
+build/
+*/build/
+out/
+*/out/
+gradlew
+gradlew.bat
+
+# Mac OS
+.DS_Store
+*/.DS_Store
+
+# log file
+/logs/
+*/logs/
+*.log
+
+
+
+
+
+
+
+
+
