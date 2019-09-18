@@ -1,4 +1,7 @@
-# sxp-zk-Inspector
+# ZooInspector
+
+## 概述
+ZooInspector is a Java Swing based application for browsing and editing ZooKeeper instances.
 
 ## 修改内容
 
