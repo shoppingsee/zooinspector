@@ -108,19 +108,18 @@
                     <finalName>ZooInspector-3.5.5</finalName>
                     <appendAssemblyId>false</appendAssemblyId>
 
-                    <!--<descriptors>-->
-                        <!--<descriptor>src/main/assembly/assembly.xml</descriptor>-->
-                    <!--</descriptors>-->
+                    <descriptors>
+                        <descriptor>src/main/assembly/assembly.xml</descriptor>
+                    </descriptors>
 
-                    <descriptorRefs>
+                    <!--<descriptorRefs>
                         <descriptorRef>jar-with-dependencies</descriptorRef>
                     </descriptorRefs>
-
                     <archive>
                         <manifest>
                             <mainClass>org.apache.zookeeper.inspector.ZooInspector</mainClass>
                         </manifest>
-                    </archive>
+                    </archive>-->
                 </configuration>
                 <executions>
                     <execution>
