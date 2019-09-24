@@ -17,20 +17,13 @@
  */
 package org.apache.zookeeper.inspector.gui;
 
-import java.awt.BorderLayout;
-import java.awt.Dimension;
-import java.awt.FlowLayout;
-import java.awt.Frame;
+import org.apache.zookeeper.inspector.logger.LoggerFactory;
+
+import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
-
-import javax.swing.JButton;
-import javax.swing.JDialog;
-import javax.swing.JEditorPane;
-import javax.swing.JPanel;
-
-import org.apache.zookeeper.inspector.logger.LoggerFactory;
 
 /**
  * The About Dialog for the application
@@ -53,8 +46,7 @@ public class ZooInspectorAboutDialog extends JDialog {
         JEditorPane aboutPane = new JEditorPane();
         aboutPane.setEditable(false);
         aboutPane.setOpaque(false);
-        java.net.URL aboutURL = ZooInspectorAboutDialog.class
-                .getResource("about.html");
+        java.net.URL aboutURL = getClass().getResource("/about.html");
         try {
             aboutPane.setPage(aboutURL);
         } catch (IOException e) {
