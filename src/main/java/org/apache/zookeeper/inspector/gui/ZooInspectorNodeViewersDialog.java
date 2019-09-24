@@ -56,7 +56,7 @@ public class ZooInspectorNodeViewersDialog extends JDialog implements
      *            notified of changes to the node viewers configuration
      * @param manager
      *            - the {@link ZooInspectorManager} for the application
-     * 
+     *
      */
     public ZooInspectorNodeViewersDialog(Frame frame,
             final List<ZooInspectorNodeViewer> currentViewers,
@@ -537,7 +537,7 @@ public class ZooInspectorNodeViewersDialog extends JDialog implements
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see
      * javax.swing.event.ListSelectionListener#valueChanged(javax.swing.event
      * .ListSelectionEvent)
@@ -594,7 +594,7 @@ public class ZooInspectorNodeViewersDialog extends JDialog implements
             ImageIcon imageIcon = iconResource.get(icon, toolTip);
             JButton jbutton;
 
-            if(imageIcon == null) {
+            if(imageIcon == null || imageIcon.getImage() == null) {
                 jbutton = new JButton(icon);
             } else {
                 jbutton = new JButton(imageIcon);
