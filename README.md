@@ -10,3 +10,5 @@ ZooInspector is a Java Swing based application for browsing and editing ZooKeepe
 2. 调整主界面大小和位置
 
 3. 解决About ZooInspector页面无法显示的问题
+
+4. 解决右侧界面无法正常显示的问题

@@ -17,12 +17,30 @@
  */
 package org.apache.zookeeper.inspector.manager;
 
+import com.sxp.common.ResourceUtils;
+import org.apache.zookeeper.CreateMode;
+import org.apache.zookeeper.KeeperException;
+import org.apache.zookeeper.WatchedEvent;
+import org.apache.zookeeper.Watcher;
+import org.apache.zookeeper.Watcher.Event.EventType;
+import org.apache.zookeeper.Watcher.Event.KeeperState;
+import org.apache.zookeeper.ZooDefs.Ids;
+import org.apache.zookeeper.ZooDefs.Perms;
+import org.apache.zookeeper.ZooKeeper;
+import org.apache.zookeeper.data.ACL;
+import org.apache.zookeeper.data.Stat;
+import org.apache.zookeeper.inspector.encryption.BasicDataEncryptionManager;
+import org.apache.zookeeper.inspector.encryption.DataEncryptionManager;
+import org.apache.zookeeper.inspector.logger.LoggerFactory;
+import org.apache.zookeeper.retry.ZooKeeperRetry;
+
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -31,22 +49,6 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
-
-import org.apache.zookeeper.CreateMode;
-import org.apache.zookeeper.KeeperException;
-import org.apache.zookeeper.WatchedEvent;
-import org.apache.zookeeper.Watcher;
-import org.apache.zookeeper.ZooKeeper;
-import org.apache.zookeeper.Watcher.Event.EventType;
-import org.apache.zookeeper.Watcher.Event.KeeperState;
-import org.apache.zookeeper.ZooDefs.Ids;
-import org.apache.zookeeper.ZooDefs.Perms;
-import org.apache.zookeeper.data.ACL;
-import org.apache.zookeeper.data.Stat;
-import org.apache.zookeeper.inspector.encryption.BasicDataEncryptionManager;
-import org.apache.zookeeper.inspector.encryption.DataEncryptionManager;
-import org.apache.zookeeper.inspector.logger.LoggerFactory;
-import org.apache.zookeeper.retry.ZooKeeperRetry;
 
 /**
  * A default implementation of {@link ZooInspectorManager} for connecting to
@@ -92,10 +94,11 @@ public class ZooInspectorManagerImpl implements ZooInspectorManager {
     public static final String AUTH_DATA_KEY = "authData";
 
 
-    private static final File defaultNodeViewersFile = new File(
-            "./src/main/resources/defaultNodeViewers.cfg");
-    private static final File defaultConnectionFile = new File(
-            "./src/main/resources/defaultConnectionSettings.cfg");
+    private static final String defaultNodeViewersFilePath = "defaultNodeViewers.cfg";
+    private static final File defaultNodeViewersFile = new File(defaultNodeViewersFilePath);
+
+    private static final String defaultConnectionFilePath = "defaultConnectionSettings.cfg";
+    private static final File defaultConnectionFile = new File(defaultConnectionFilePath);
 
     private DataEncryptionManager encryptionManager;
     private String connectString;
@@ -730,6 +733,13 @@ public class ZooInspectorManagerImpl implements ZooInspectorManager {
             } finally {
                 reader.close();
             }
+        } else {
+            List<String> lines = ResourceUtils.readContent2List(defaultNodeViewersFilePath, StandardCharsets.UTF_8);
+            for (String line : lines) {
+                if (line != null && line.length() > 0 && !line.startsWith("#")) {
+                    result.add(line);
+                }
+            }
         }
         return result;
     }
@@ -772,13 +782,16 @@ public class ZooInspectorManagerImpl implements ZooInspectorManager {
      */
     public void saveDefaultConnectionFile(Properties props) throws IOException {
         File defaultDir = defaultConnectionFile.getParentFile();
-        if (!defaultDir.exists()) {
-            if (!defaultDir.mkdirs()) {
-                throw new IOException(
-                        "Failed to create configuration directory: "
-                                + defaultDir.getAbsolutePath());
+        if (defaultDir != null) {
+            if (!defaultDir.exists()) {
+                if (!defaultDir.mkdirs()) {
+                    throw new IOException(
+                            "Failed to create configuration directory: "
+                                    + defaultDir.getAbsolutePath());
+                }
             }
         }
+
         if (!defaultConnectionFile.exists()) {
             if (!defaultConnectionFile.createNewFile()) {
                 throw new IOException(
