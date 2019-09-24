@@ -8,3 +8,5 @@ ZooInspector is a Java Swing based application for browsing and editing ZooKeepe
 1. 将官方的ZooInspector 3.5.5的构建方式修改为maven
 
 2. 调整主界面大小和位置
+
+3.

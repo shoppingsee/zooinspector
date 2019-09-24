@@ -18,13 +18,12 @@
 
 package org.apache.zookeeper.inspector.gui;
 
+import org.apache.zookeeper.inspector.logger.LoggerFactory;
+
+import javax.swing.*;
 import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URL;
-
-import javax.swing.ImageIcon;
-
-import org.apache.zookeeper.inspector.logger.LoggerFactory;
 
 /**
  * @see http://standards.freedesktop.org/icon-naming-spec/icon-naming-spec-latest.html
@@ -32,7 +31,7 @@ import org.apache.zookeeper.inspector.logger.LoggerFactory;
  */
 public class IconResource {
 
-    public static final String ICON_ChangeNodeViewers = "";
+    public static final String ICON_ChangeNodeViewers = "actions/change";
     public static final String ICON_TREE_LEAF = "mimetypes/text-x-generic";
     public static final String ICON_TREE_OPEN = "places/folder";
     public static final String ICON_TREE_CLOSE = "places/folder";
