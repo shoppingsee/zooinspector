@@ -1,3 +1,3 @@
 #!/bin/bash
 
-nohup java -cp $CLASSPATH:lib/* org.apache.zookeeper.inspector.ZooInspector > ZooInspector.log &
+nohup java -cp .:lib/* org.apache.zookeeper.inspector.ZooInspector > ZooInspector.log &

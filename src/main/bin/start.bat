@@ -1,1 +1,1 @@
-java -cp %CLASSPATH%;lib/* org.apache.zookeeper.inspector.ZooInspector
+java -cp .;lib/* org.apache.zookeeper.inspector.ZooInspector
