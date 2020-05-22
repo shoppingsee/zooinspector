@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<configuration scan="true" scanPeriod="60 seconds" debug="false">
+    <property name="PATH" value="/tmp/logs/zooinspector" />
+    <property name="FILE_PREFIX" value="zooinspector" />
+
+    <!--格式化输出：%d表示日期, %-5level日志级别从左显示5个字符宽度, %thread表示线程名, %line行号, %msg日志消息, %n换行符-->
+    <property name="PATTERN" value="%d{yyyy-MM-dd HH:mm:ss.SSS} %-5level [%thread] %logger{50} %line - %msg%n" />
+
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <pattern>${PATTERN}</pattern>
+        </encoder>
+    </appender>
+
+    <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <!-- daily rollover -->
+            <FileNamePattern>${PATH}/${FILE_PREFIX}.%d{yyyy-MM-dd}.%i.log.zip</FileNamePattern>
+
+            <!-- keep 30 days' worth of history, each file should be at most 20MB,
+                 but all archive files at most 2GB -->
+            <MaxHistory>30</MaxHistory>
+            <maxFileSize>20MB</maxFileSize>
+
+            <!-- 总大小的限制计算的是压缩之后的文件大小  -->
+            <totalSizeCap>2GB</totalSizeCap>
+        </rollingPolicy>
+
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <pattern>${PATTERN}</pattern>
+        </encoder>
+
+    </appender>
+
+    <!-- 日志输出级别 -->
+    <!-- TRACE < DEBUG < INFO < WARN < ERROR -->
+    <root level="INFO">
+        <appender-ref ref="STDOUT" />
+    </root>
+</configuration>
