@@ -18,7 +18,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
         <!--  zk高版本会导致连接zk服务端多次超时  -->
-        <zookeeper.version>3.4.12</zookeeper.version>
+        <zookeeper.version>3.4.14</zookeeper.version>
         <guava.version>18.0</guava.version>
         <commons-lang.version>2.4</commons-lang.version>
         <rat.version>0.6</rat.version>
